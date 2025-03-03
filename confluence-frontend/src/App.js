@@ -11,7 +11,7 @@ function App() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:5006/api/login', {
+      const response = await axios.post('https://confluence-backend.onrender.com/api/login', {
         username,
         password,
       });
@@ -27,7 +27,7 @@ function App() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post('http://localhost:5006/api/search', {
+      const response = await axios.post('https://confluence-backend.onrender.com/api/search', {
         username,
         password,
         searchText,
