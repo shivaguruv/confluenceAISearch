@@ -1,9 +1,10 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
-const PORT = 5006;
+const PORT = process.env.PORT;
 
 // Middleware
 app.use(cors({ origin: 'https://confluencefrontend.onrender.com' }));
