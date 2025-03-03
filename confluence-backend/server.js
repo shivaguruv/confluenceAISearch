@@ -24,13 +24,15 @@ app.post('/api/login', async (req, res) => {
 
     try {
         // Verify credentials by fetching the current user
-        const response = await axios.get(`${CONFLUENCE_BASE_URL}/wiki/rest/api/user/current`, {
+        const response = await axios.get(`${CONFLUENCE_BASE_URL}/user/current`, {
             headers: {
                 Authorization: `${AUTH_TYPE} ${Buffer.from(`${username}:${password}`).toString('base64')}`,
             },
         });
 
         if (response.status === 200) {
+            // Set a session cookie (for demonstration purposes)
+            res.cookie('sessionToken', 'your-session-token', { httpOnly: true });
             res.status(200).json({ message: 'Login successful', user: response.data });
         } else {
             throw new Error('Invalid credentials');
@@ -43,7 +45,6 @@ app.post('/api/login', async (req, res) => {
 
 // Search Endpoint
 app.post('/api/search', async (req, res) => {
-    //https://shivaguruvenkateswaran.atlassian.net/wiki/rest/api/search?cql=text~'salesforce'
     const { username, password, searchText } = req.body;
 
     if (!username || !password || !searchText) {
@@ -52,7 +53,7 @@ app.post('/api/search', async (req, res) => {
 
     try {
         // Search Confluence pages
-        const response = await axios.get(`${CONFLUENCE_BASE_URL}/wiki/rest/api/search?cql=text~"${encodeURIComponent(searchText)}"`, {
+        const response = await axios.get(`${CONFLUENCE_BASE_URL}/content/search?cql=text~"${encodeURIComponent(searchText)}"`, {
             headers: {
                 Authorization: `${AUTH_TYPE} ${Buffer.from(`${username}:${password}`).toString('base64')}`,
             },
@@ -64,6 +65,7 @@ app.post('/api/search', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch search results' });
     }
 });
+
 
 // Start Server
 app.listen(PORT, () => {
