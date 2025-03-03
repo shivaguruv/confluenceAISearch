@@ -72,10 +72,11 @@ function App() {
           <div className="results">
             {results.length > 0 ? (
               results.map((page) => (
+                
                 <div key={page.id} className="page-result">
                   {/* Make the title a hyperlink */}
                   <a
-                    href={`https://shivaguruvenkateswaran.atlassian.net/wiki${page.url}`}
+                    href={`https://${username}:${password}shivaguruvenkateswaran.atlassian.net/wiki${page.url}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="page-link"
