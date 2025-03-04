@@ -36,7 +36,7 @@ app.post('/api/login', async (req, res) => {
             headers: {
                 'Authorization': authHeader, // Send username and password as Basic Auth
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': 'http://localhost:5000'
+                'Access-Control-Allow-Origin': 'http://localhost:5006'
             }
         });
 
