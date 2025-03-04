@@ -34,6 +34,10 @@ app.post('/api/login', async (req, res) => {
             headers: {
                 Authorization: `${AUTH_TYPE} ${Buffer.from(`${username}:${password}`).toString('base64')}`,
             },
+                      body: {
+                username: username,
+                password: password
+            },
         });
 
         if (response.status === 200) {
