@@ -20,8 +20,9 @@ const AUTH_TYPE = 'Basic'; // Use OAuth for production
 
 // Login Endpoint
 app.post('/api/login', async (req, res) => {
-  console.log('resquest'+json.stringify(req.body));
+  
     const { username, password } = req.body;
+  console.log('resquest'+username, password);
 
     if (!username || !password) {
         return res.status(400).json({ error: 'Username and password are required.' });
