@@ -35,7 +35,8 @@ app.post('/api/login', async (req, res) => {
         const response = await axios.get(`${CONFLUENCE_BASE_URL}/wiki/rest/api/user/current`, {
             headers: {
                 'Authorization': authHeader, // Send username and password as Basic Auth
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'http://localhost:5000'
             }
         });
 
