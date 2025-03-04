@@ -7,7 +7,10 @@ const app = express();
 const PORT = process.env.PORT;
 
 // Middleware
-app.use(cors({ origin: 'https://confluencefrontend.onrender.com' }));
+app.use(cors({
+  origin: 'https://confluencefrontend.onrender.com', // Replace with your frontend URL
+  credentials: true,
+}));
 app.use(express.json());
 
 // Confluence API Configuration
