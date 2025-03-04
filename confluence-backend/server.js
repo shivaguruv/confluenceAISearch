@@ -28,7 +28,7 @@ app.post('/api/login', async (req, res) => {
 
     try {
         // Verify credentials by fetching the current user
-        const response = await axios.get(`${CONFLUENCE_BASE_URL}/user/current`, {
+        const response = await axios.get(`${CONFLUENCE_BASE_URL}/wiki/rest/api/user/current`, {
             headers: {
                 Authorization: `${AUTH_TYPE} ${Buffer.from(`${username}:${password}`).toString('base64')}`,
             },
@@ -57,7 +57,7 @@ app.post('/api/search', async (req, res) => {
 
     try {
         // Search Confluence pages
-        const response = await axios.get(`${CONFLUENCE_BASE_URL}/content/search?cql=text~"${encodeURIComponent(searchText)}"`, {
+        const response = await axios.get(`${CONFLUENCE_BASE_URL}/wiki/rest/api/search?cql=text~"${encodeURIComponent(searchText)}"`, {
             headers: {
                 Authorization: `${AUTH_TYPE} ${Buffer.from(`${username}:${password}`).toString('base64')}`,
             },
