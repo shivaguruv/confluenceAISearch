@@ -11,10 +11,22 @@ function App() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('https://confluenceaisearch.onrender.com/api/login', {
-        username,
-        password,
-      });
+const response = await axios.post(
+  'https://confluenceaisearch.onrender.com/api/login',
+  {
+    username,
+    password,
+  },
+  {
+    headers: {
+      'Content-Type': 'application/json',  // Ensures correct content type
+      'Accept': 'application/json',        // Ensures JSON response
+      'Access-Control-Allow-Origin': '*',  // Debugging CORS issues
+    },
+    timeout: 10000,  // Set a timeout (10 seconds)
+  }
+);
+
 
       if (response.data.message === 'Login successful') {
         setIsLoggedIn(true);
