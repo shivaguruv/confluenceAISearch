@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: '*', // Allow any frontend (Not recommended for production)
+  origin: 'https://confluencefrontend.onrender.com', // Allow any frontend (Not recommended for production)
   credentials: true,
 }));
 
