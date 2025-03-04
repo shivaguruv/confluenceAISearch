@@ -29,7 +29,7 @@ app.post('/api/login', async (req, res) => {
 
     try {
         // Use Basic Auth to authenticate with Confluence
-        const authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;
+        const authHeader = `Basic ${Buffer.from(`${username.trim()}:${password.trim()}`).toString('base64')}`;
 
         // Fetch the current user to verify credentials
         const response = await axios.get(`${CONFLUENCE_BASE_URL}/wiki/rest/api/user/current`, {
