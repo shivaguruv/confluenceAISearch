@@ -43,9 +43,7 @@ const { username, password } = req.body;
 
   // Handle the response
   res.status(200).json({ message: 'Authentication successful', data: response.data });
-      } else {
-          throw new Error('Invalid credentials');
-      }
+      
   } catch (error) {
       console.error('Login error:', error.message);
       res.status(500).json({ error: error });
