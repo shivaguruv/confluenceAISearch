@@ -20,9 +20,11 @@ const AUTH_TYPE = 'Basic'; // Use OAuth for production
 
 // Login Endpoint
 app.post('/api/login', async (req, res) => {
-  
-    const { username, password } = req.body;
-  console.log('resquest'+username, password);
+  const { username, password } = req.body;
+    const data = {
+        username: username,
+        password: password,
+    };
 
     if (!username || !password) {
         return res.status(400).json({ error: 'Username and password are required.' });
@@ -30,15 +32,11 @@ app.post('/api/login', async (req, res) => {
 
     try {
         // Verify credentials by fetching the current user
-        const response = await axios.get(`${CONFLUENCE_BASE_URL}/wiki/rest/api/user/current`, {
+        const response = await axios.get(`${CONFLUENCE_BASE_URL}/wiki/rest/api/user/current`, data, {
             headers: {
-                Authorization: `${AUTH_TYPE} ${Buffer.from(`${username}:${password}`).toString('base64')}`,
-            },
-                      body: {
-                username: username,
-                password: password
-            },
-        });
+                'Content-Type': 'application/json'
+            }
+        })
 
         if (response.status === 200) {
             // Set a session cookie (for demonstration purposes)
