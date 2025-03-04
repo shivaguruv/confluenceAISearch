@@ -70,6 +70,15 @@ app.post('/api/search', async (req, res) => {
     }
 });
 
+app.get('/test-db', async (req, res) => {
+  try {
+    const result = await db.query('SELECT 1'); // Example query
+    res.status(200).json({ message: 'Database connection successful', result });
+  } catch (error) {
+    res.status(500).json({ message: 'Database connection failed', error: error.message });
+  }
+});
+
 
 // Start Server
 app.listen(PORT, () => {
