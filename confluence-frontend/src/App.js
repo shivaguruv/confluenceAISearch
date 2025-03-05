@@ -11,7 +11,9 @@ function App() {
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   const handleLogin = async () => {
+    console.log(API_BASE_URL);
     try {
+      console.log(API_BASE_URL);
 const response = await axios.post(
   `${API_BASE_URL}/api/login`,
   {
