@@ -44,6 +44,7 @@ function App() {
     } catch (error) {
       console.error('Search error:', error);
       alert('Failed to fetch search results');
+      setResults([]);
     } finally {
       setLoading(false);
     }
