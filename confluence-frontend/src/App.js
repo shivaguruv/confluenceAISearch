@@ -13,7 +13,7 @@ function App() {
   const handleLogin = async () => {
     console.log(API_BASE_URL);
     try {
-      console.log(API_BASE_URL);
+      console.log('entering login');
 const response = await axios.post(
   'https://confluenceaisearch.onrender.com/api/login',
   {
