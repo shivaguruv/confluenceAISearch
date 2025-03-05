@@ -34,24 +34,27 @@ function App() {
   const handleSearch = async () => {
     setLoading(true);
     setSearched(true);
+    setResults([]); // Ensure UI clears old results before fetching
+  
     try {
       const response = await axios.post('https://confluenceaisearch-xsea.onrender.com/api/search', {
         username,
         password,
         searchText,
       });
-
-      // Ensure results is always an array
-      const resultsData = response.data && response.data.results ? response.data.results : [];
+  
+      // Make sure response.data.results is always an array
+      const resultsData = response.data?.results ?? [];
       setResults(resultsData);
     } catch (error) {
       console.error('Search error:', error);
       alert('Failed to fetch search results');
-      setResults([]); // Avoid crashing by setting an empty array
+      setResults([]); // Avoid crashes by setting an empty array
     } finally {
       setLoading(false);
     }
   };
+  
 
 
   return (
