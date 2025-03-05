@@ -46,6 +46,7 @@ function App() {
       // Make sure response.data.results is always an array
       const resultsData = response.data?.results ?? [];
       setResults(resultsData);
+      console.log(resultsData.length + ' ' + loading);
     } catch (error) {
       console.error('Search error:', error);
       alert('Failed to fetch search results');
