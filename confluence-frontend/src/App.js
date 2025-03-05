@@ -12,6 +12,7 @@ function App() {
   const [searched, setSearched] = useState(false);
 
   const handleLogin = async () => {
+    setLoading(true);
     try {
       const response = await axios.post('https://confluenceaisearch-xsea.onrender.com/api/login', {
         username,
@@ -24,6 +25,9 @@ function App() {
     } catch (error) {
       alert('Invalid username or password');
       console.error('Login error:', error);
+    }
+    finally{
+      setLoading(false);
     }
   };
 
