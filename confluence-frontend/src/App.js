@@ -35,8 +35,10 @@ const response = await axios.post(
         setIsLoggedIn(true);
       }
     } catch (error) {
+      console.log(API_BASE_URL);
       alert('Invalid username or password');
       console.error('Login error:', error);
+      console.log(API_BASE_URL);
     }
   };
 
