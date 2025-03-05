@@ -28,7 +28,7 @@ const response = await axios.post(
 );
 
 
-      if (response.data.message === 'Login successful') {
+      if (response.data.message === 'Authentication successful') {
         setIsLoggedIn(true);
       }
     } catch (error) {
