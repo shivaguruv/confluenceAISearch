@@ -7,10 +7,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({
-    origin: 'https://confluencefrontend.onrender.com', // Allow requests from this frontend
-    credentials: true,
-}));
+app.use(cors({ origin: '*' }));  // Allow all origins (For Development)
+
 
 app.use(express.json());
 
