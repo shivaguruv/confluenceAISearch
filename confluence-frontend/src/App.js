@@ -26,7 +26,7 @@ function App() {
       alert('Invalid username or password');
       console.error('Login error:', error);
     }
-    finally{
+    finally {
       setLoading(false);
     }
   };
@@ -40,15 +40,19 @@ function App() {
         password,
         searchText,
       });
-      setResults(response.data.results || []);
+
+      // Ensure results is always an array
+      const resultsData = response.data && response.data.results ? response.data.results : [];
+      setResults(resultsData);
     } catch (error) {
       console.error('Search error:', error);
       alert('Failed to fetch search results');
-      setResults([]);
+      setResults([]); // Avoid crashing by setting an empty array
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="App">
@@ -83,8 +87,13 @@ function App() {
           {loading && <div className="spinner"></div>}
 
           <div className="results">
-            {!loading && searched && results.length === 0 && <p>No results found.</p>}
-            {!loading &&
+            {loading && <div className="spinner"></div>}
+
+            {!loading && searched && results.length === 0 && (
+              <p className="no-results">No results found.</p>
+            )}
+
+            {!loading && results.length > 0 &&
               results.map((page) => (
                 <div key={page.id} className="page-result">
                   <a
@@ -98,6 +107,7 @@ function App() {
                 </div>
               ))}
           </div>
+
         </div>
       )}
     </div>
