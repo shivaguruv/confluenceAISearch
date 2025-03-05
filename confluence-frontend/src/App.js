@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './App.css';
+import React, { useState } from "react";
+import axios from "axios";
+import "./App.css";
 
 function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
@@ -14,19 +14,21 @@ function App() {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('https://confluenceaisearch-xsea.onrender.com/api/login', {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "https://confluenceaisearch-xsea.onrender.com/api/login",
+        {
+          username,
+          password,
+        }
+      );
 
-      if (response.data.message === 'Authentication successful') {
+      if (response.data.message === "Authentication successful") {
         setIsLoggedIn(true);
       }
     } catch (error) {
-      alert('Invalid username or password');
-      console.error('Login error:', error);
-    }
-    finally {
+      alert("Invalid username or password");
+      console.error("Login error:", error);
+    } finally {
       setLoading(false);
     }
   };
@@ -35,28 +37,29 @@ function App() {
     setLoading(true);
     setSearched(true);
     setResults([]); // Ensure UI clears old results before fetching
-  
+
     try {
-      const response = await axios.post('https://confluenceaisearch-xsea.onrender.com/api/search', {
-        username,
-        password,
-        searchText,
-      });
-  
+      const response = await axios.post(
+        "https://confluenceaisearch-xsea.onrender.com/api/search",
+        {
+          username,
+          password,
+          searchText,
+        }
+      );
+
       // Make sure response.data.results is always an array
       const resultsData = response.data?.results ?? [];
       setResults(resultsData);
-      console.log(resultsData.length + ' ' + loading);
+      console.log(resultsData.length + " " + loading);
     } catch (error) {
-      console.error('Search error:', error);
-      alert('Failed to fetch search results');
+      console.error("Search error:", error);
+      alert("Failed to fetch search results");
       setResults([]); // Avoid crashes by setting an empty array
     } finally {
       setLoading(false);
     }
   };
-  
-
 
   return (
     <div className="App">
@@ -97,21 +100,32 @@ function App() {
               <p className="no-results">No results found.</p>
             )}
 
-            {!loading && results.length > 0 &&
-              results.map((page) => (
-                <div key={page.id} className="page-result">
-                  <a
-                    href={`https://${username}:${password}@shivaguruvenkateswaran.atlassian.net/wiki${page.url}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="page-link"
-                  >
-                    {page.content.title}
-                  </a>
-                </div>
-              ))}
-          </div>
+            {!loading &&
+              results.length > 0 &&
+              results.map((page, index) => {
+                // ✅ Prevent error by checking if page and content exist
+                if (!page?.content?.title) {
+                  return (
+                    <div key={index} className="page-result">
+                      <p className="no-results">Invalid data</p>
+                    </div>
+                  );
+                }
 
+                return (
+                  <div key={page?.id || index} className="page-result">
+                    <a
+                      href={`https://${username}:${password}@shivaguruvenkateswaran.atlassian.net/wiki${page.url}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="page-link"
+                    >
+                      {page.content.title}
+                    </a>
+                  </div>
+                );
+              })}
+          </div>
         </div>
       )}
     </div>
