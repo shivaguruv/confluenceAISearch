@@ -15,7 +15,7 @@ function App() {
     try {
       console.log(API_BASE_URL);
 const response = await axios.post(
-  'https://confluenceaisearch.onrender.com/api/login',
+  'https://confluenceaisearch-backend.onrender.com/api/login',
   {
     username,
     password,
@@ -44,7 +44,7 @@ const response = await axios.post(
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post('https://confluenceaisearch.onrender.com/api/search', {
+      const response = await axios.post('https://confluenceaisearch-backend.onrender.com/api/search', {
         username,
         password,
         searchText,
