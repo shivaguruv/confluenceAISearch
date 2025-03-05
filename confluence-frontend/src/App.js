@@ -8,6 +8,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [searched, setSearched] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -16,7 +18,7 @@ function App() {
         password,
       });
 
-      if (response.data.message === 'Login successful') {
+      if (response.data.message === 'Authentication successful') {
         setIsLoggedIn(true);
       }
     } catch (error) {
@@ -26,17 +28,20 @@ function App() {
   };
 
   const handleSearch = async () => {
+    setLoading(true);
+    setSearched(true);
     try {
       const response = await axios.post('https://confluenceaisearch-xsea.onrender.com/api/search', {
         username,
         password,
         searchText,
       });
-      console.log(JSON.stringify(response.data));
       setResults(response.data.results || []);
     } catch (error) {
       console.error('Search error:', error);
       alert('Failed to fetch search results');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,25 +74,24 @@ function App() {
             onChange={(e) => setSearchText(e.target.value)}
           />
           <button onClick={handleSearch}>Search</button>
+
+          {loading && <div className="spinner"></div>}
+
           <div className="results">
-            {results.length > 0 ? (
+            {!loading && searched && results.length === 0 && <p>No results found.</p>}
+            {!loading &&
               results.map((page) => (
-                
                 <div key={page.id} className="page-result">
-                  {/* Make the title a hyperlink */}
                   <a
-                    href={`https://${username}:${password}shivaguruvenkateswaran.atlassian.net/wiki${page.url}`}
+                    href={`https://${username}:${password}@shivaguruvenkateswaran.atlassian.net/wiki${page.url}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="page-link"
                   >
-                    {page.content.title} 
+                    {page.content.title}
                   </a>
                 </div>
-              ))
-            ) : (
-              <p>No results found.</p>
-            )}
+              ))}
           </div>
         </div>
       )}
