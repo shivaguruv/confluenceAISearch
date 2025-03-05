@@ -103,14 +103,6 @@ function App() {
             {!loading &&
               results.length > 0 &&
               results.map((page, index) => {
-                // ✅ Prevent error by checking if page and content exist
-                if (!page?.content?.title) {
-                  return (
-                    <div key={index} className="page-result">
-                      <p className="no-results">Invalid data</p>
-                    </div>
-                  );
-                }
 
                 return (
                   <div key={page?.id || index} className="page-result">
@@ -120,7 +112,7 @@ function App() {
                       rel="noopener noreferrer"
                       className="page-link"
                     >
-                      {page.content.title}
+                      {page.title.replace(/@@@hl@@@|@@@endhl@@@/g, "")}
                     </a>
                   </div>
                 );
